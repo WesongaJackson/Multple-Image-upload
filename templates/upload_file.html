@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include 'navbar.html' %}
+    
+
+
+
+    <div class="container mt-5">
+        <h2>Upload Images</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="form-group">
+                <label for="imagePreview">Image Preview</label>
+                <div id="imagePreview" class="d-flex flex-wrap"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to handle image preview
+        function previewImages() {
+            var previewContainer = document.getElementById('imagePreview');
+            var filesInput = document.querySelector('input[type="file"]');
+            var files = filesInput.files;
+
+            previewContainer.innerHTML = ''; // Clear previous previews
+
+            for (var i = 0; i < files.length; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var imgElement = document.createElement('img');
+                    imgElement.src = e.target.result;
+                    imgElement.classList.add('img-thumbnail', 'mr-2', 'mb-2');
+                    previewContainer.appendChild(imgElement);
+                };
+
+                reader.readAsDataURL(files[i]);
+            }
+        }
+
+        // Attach the previewImages function to the change event of the file input
+        document.querySelector('input[type="file"]').addEventListener('change', previewImages);
+    </script>
+{% endblock %}
+
+   

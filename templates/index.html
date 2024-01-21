@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include 'navbar.html' %}
+    <div class="container">
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post">
+                    <h2>{{ post.title }}</h2>
+                    {% if post.images.all %}
+                        <div id="carousel-{{ post.id }}" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for image in post.images.all %}
+                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                        <img src="{{ image.image.url }}" class="d-block w-100"
+                                             alt="">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="lead">No posts yet</p>
+        {% endif %}
+
+    </div>
+{% endblock %}
