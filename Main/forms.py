@@ -1,20 +1,11 @@
-from django import  forms
-
+from django import forms
+from multiupload.fields import MultiFileField
 from Main.models import Post
 
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'images']
+        fields = ["images"]
 
-    images = forms.FileField(
-        label='Upload Images',
-        widget=forms.ClearableFileInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )
-    )
-
-
+    images = MultiFileField(label="Upload Images", min_num=1, max_num=10)
